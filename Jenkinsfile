@@ -14,8 +14,10 @@ pipeline{
         // string(name : 'version', defaultValue : '1.0.0', description : 'wt is artifact version?')
         // string(name : 'environment', defaultValue : 'dev', description : 'wt is environment?')
         string(name : 'version', defaultValue : '', description : 'wt is artifact version?')
-        string(name : 'environment', defaultValue : '', description : 'wt is environment?')
+        string(name : 'environment', defaultValue : '', description : 'wt is environment?')\
+        choice(name: 'action', choices: ['apply', 'destroy'], description: 'Pick something')
     }
+  
     stages{
         stage('Print version'){
             steps{
@@ -41,15 +43,43 @@ pipeline{
                 """
             }
         }
-         stage('Apply'){
-            steps{
+         stage('Apply') {
+            when{
+                expression {
+                    params.action== 'apply'
+                }
+            }
+            input{
+                message "should we continue?"
+                ok "yes, U can.."
+            }
+            steps {
                 sh """
                     cd terraform
                     terraform apply -var-file=${params.environment}/${params.environment}.tfvars -var="app_version=${params.version}" -auto-approve
                 """
             }
         }
+        stage('Destroy') {
+            when{
+                expression {
+                    params.action== 'destroy'
+                }
+            }
+            input{
+                message "should we continue?"
+                ok "yes, U can.."
+            }
+            steps {
+                sh """
+                    cd terraform
+                    terraform destroy -var-file=${params.environment}/${params.environment}.tfvars -var="app_version=${params.version}" -auto-approve
+                """
+            }
+        }
     }
+
+    
     //post build
     post { 
         always { 

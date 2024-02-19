@@ -14,7 +14,7 @@ pipeline{
         // string(name : 'version', defaultValue : '1.0.0', description : 'wt is artifact version?')
         // string(name : 'environment', defaultValue : 'dev', description : 'wt is environment?')
         string(name : 'version', defaultValue : '', description : 'wt is artifact version?')
-        string(name : 'environment', defaultValue : '', description : 'wt is environment?')\
+        string(name : 'environment', defaultValue : '', description : 'wt is environment?')
         choice(name: 'action', choices: ['apply', 'destroy'], description: 'Pick something')
     }
   

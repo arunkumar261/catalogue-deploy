@@ -25,3 +25,7 @@ variable "tags" {
     }
   
 }
+
+variable "app_version" {
+  
+}

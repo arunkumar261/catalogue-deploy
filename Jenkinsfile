@@ -1,7 +1,7 @@
 pipeline{
     agent {
         node {
-            label : 'AGENT-1'
+            label 'AGENT-1'
         }
     }
 
@@ -15,11 +15,12 @@ pipeline{
     }
     stages{
         stage('Print version'){
-            sh """
-            echo "version : ${params.version}"
-            echo "environment" : ${params.environment}
-            """
-            
+            steps{
+                sh """
+                    echo "version : ${params.version}"
+                    echo "environment" : ${params.environment}
+                """
+            }
         }
     }
     //post build

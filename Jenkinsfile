@@ -33,7 +33,7 @@ pipeline{
                 """
             }
         }
-        stage('Init'){
+        stage('Plan'){
             steps{
                 sh """
                     cd terraform
